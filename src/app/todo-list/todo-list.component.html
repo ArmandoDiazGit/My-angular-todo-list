@@ -13,49 +13,53 @@
         ngModel
         name="task"
         required
-        />
+      />
       @if (taskForm.invalid && taskForm.dirty) {
-        <small
-          id="errorMessage"
-          class="form-text text-danger"
-          >Required field</small
-          >
-        }
-      </div>
+      <small id="errorMessage" class="form-text text-danger"
+        >Required field</small
+      >
+      }
+    </div>
 
-      <button
-        id="submitButton"
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="!taskForm.valid"
-        >
-        Submit
-      </button>
-    </form>
+    <button
+      id="submitButton"
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!taskForm.valid"
+    >
+      Submit
+    </button>
+  </form>
 
-    <hr />
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Task</th>
-          <th scope="col">Complete</th>
-          <th scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (task of tasks; track task; let i = $index) {
-          <tr>
-            <td>{{ task.taskName }}</td>
-            <td>
-              <input type="checkbox" (change)="onToggle(i)" id="completedTask"/>
-            </td>
-            <td>
-              <button class="btn btn-danger btn-sm" (click)="onDelete(i)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+  <hr />
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Task</th>
+        <th scope="col">Complete</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (task of store.todos(); track $index) {
+      <tr>
+        <td>{{ task.title }}</td>
+        <td>
+          <input
+            type="checkbox"
+            (change)="onToggle(task.id)"
+            id="completedTask"
+          />
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(task.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-snackbar>All task are completed. ✅</app-snackbar>
